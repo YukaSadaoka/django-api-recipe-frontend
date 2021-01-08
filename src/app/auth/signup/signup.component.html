@@ -1,0 +1,28 @@
+<form (ngSubmit)="onSubmit()" class="ui form" [formGroup]="signupForm">
+    <app-input 
+            [control]="signupForm.get('username')" 
+            label="Username" 
+            inputType="text"
+            pattern="{{ pattern }}"
+            >
+    </app-input>
+    <app-input [control]="signupForm.get('email')" label="Email" inputType="email"></app-input>
+    <app-input [control]="signupForm.get('password')" label="Password" inputType="password"></app-input>
+    <app-input [control]="signupForm.get('confirmPassword') " label="Confirm Password" inputType="password"></app-input>
+    {{ this.signupForm.status | json }} 
+    {{ this.signupForm.value | json }}
+    {{ this.signupForm.errors | json }}
+
+    <div 
+        *ngIf="signupForm.get('password') &&
+            signupForm.get('confirmPassword') &&
+            signupForm.errors"
+        class="ui red basic label"
+    >
+        <p *ngIf="signupForm.errors.pwDontMatch">Password don't match.</p>
+        <p *ngIf="signupForm.errors.noConnection">No internet connection. failed to sign up.</p>
+        <p *ngIf="signupForm.errors.unknownError">Unknown Error occurred. Try again later.</p>
+    </div>
+    <button class="ui button primary">Sign up</button> 
+</form>
+
